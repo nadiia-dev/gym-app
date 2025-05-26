@@ -4,6 +4,7 @@ import PageTitle from "@/components/ui/page-title";
 import usersStore, { IUsersStore } from "@/store/users-store";
 import dayjs from "dayjs";
 import Link from "next/link";
+import AdminDashboard from "./_components/admin-dashboard";
 
 const Page = () => {
   const { user, curSubscription } = usersStore() as IUsersStore;
@@ -14,6 +15,10 @@ const Page = () => {
       <p className="text-sm font-semibold">{value}</p>
     </div>
   );
+
+  if (user?.is_admin) {
+    return <AdminDashboard />;
+  }
 
   return (
     <div>
