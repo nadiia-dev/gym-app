@@ -10,6 +10,7 @@ import { SignIn, SignUp } from "@clerk/nextjs";
 import { ArrowDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import PlansList from "./_components/plans-list";
 
 export default function Home() {
   const [openSheet, setOpenSheet] = useState(false);
@@ -59,6 +60,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold text-center text-white mt-20">
           Our Plans
         </h1>
+        <PlansList />
       </div>
 
       <Sheet open={openSheet} onOpenChange={setOpenSheet}>
