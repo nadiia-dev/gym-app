@@ -4,9 +4,10 @@ import toast from "react-hot-toast";
 import Header from "./header";
 import Spinner from "@/components/ui/spinner";
 import usersStore, { IUsersStore } from "@/store/users-store";
+import { getCurSubscription } from "@/actions/subscriptions";
 
 const PrivateLayout = ({ children }: { children: ReactNode }) => {
-  const { user, setUser } = usersStore() as IUsersStore;
+  const { user, setUser, setCurSubscription } = usersStore() as IUsersStore;
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,6 +20,11 @@ const PrivateLayout = ({ children }: { children: ReactNode }) => {
         throw new Error(res.error);
       } else {
         setUser(res.data);
+
+        const subResp: any = await getCurSubscription(res.data.id);
+        if (subResp.success) {
+          setCurSubscription(subResp.data);
+        }
       }
     } catch (e) {
       if (e instanceof Error) {
