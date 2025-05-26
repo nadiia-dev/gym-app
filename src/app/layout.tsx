@@ -9,6 +9,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import CustomLayout from "@/custom-layout";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Gym app",
@@ -24,7 +25,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-          <CustomLayout>{children}</CustomLayout>;
+          <CustomLayout>{children}</CustomLayout>
+          <Toaster position="top-left" reverseOrder={false} />
         </body>
       </html>
     </ClerkProvider>
