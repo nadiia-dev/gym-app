@@ -18,7 +18,7 @@ import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { uploadImages } from "@/utils";
-import { addPlan, editPlan } from "@/app/actions/plans";
+import { addPlan, editPlan } from "@/actions/plans";
 import toast from "react-hot-toast";
 
 interface Props {

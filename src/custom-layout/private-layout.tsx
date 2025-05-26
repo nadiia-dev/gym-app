@@ -1,5 +1,4 @@
-import { getCurrentUser } from "@/app/actions/users";
-import { IUser } from "@/types/user";
+import { getCurrentUser } from "@/actions/users";
 import { ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Header from "./header";

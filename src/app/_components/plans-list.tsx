@@ -1,7 +1,7 @@
 import { IPlan } from "@/types/plan";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getAllPlans } from "../actions/plans";
+import { getAllPlans } from "../../actions/plans";
 
 const PlansList = () => {
   const [plans, setPlans] = useState<IPlan[]>([]);

@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllPlans } from "@/app/actions/plans";
+import { getAllPlans } from "@/actions/plans";
 import { Button } from "@/components/ui/button";
 import PageTitle from "@/components/ui/page-title";
 import Spinner from "@/components/ui/spinner";

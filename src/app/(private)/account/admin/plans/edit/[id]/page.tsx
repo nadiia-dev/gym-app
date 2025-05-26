@@ -1,4 +1,4 @@
-import { getPlanById } from "@/app/actions/plans";
+import { getPlanById } from "@/actions/plans";
 import PlanForm from "../../_components/plan-form";
 import PageTitle from "@/components/ui/page-title";
 

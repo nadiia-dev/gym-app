@@ -1,7 +1,7 @@
 "use server";
 
 import { currentUser } from "@clerk/nextjs/server";
-import supabase from "../config/supabase-config";
+import supabase from "../app/config/supabase-config";
 
 export const getCurrentUser = async () => {
   try {

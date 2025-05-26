@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2 } from "lucide-react";
 import dayjs from "dayjs";
-import { deletePlan } from "@/app/actions/plans";
+import { deletePlan } from "@/actions/plans";
 import toast from "react-hot-toast";
 
 const PlansTable = ({ plans }: { plans: IPlan[] }) => {
