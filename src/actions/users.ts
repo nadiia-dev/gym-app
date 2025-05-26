@@ -69,3 +69,26 @@ export const getAllUsers = async () => {
     };
   }
 };
+
+export const getAllCustomers = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("is_customer", true);
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
