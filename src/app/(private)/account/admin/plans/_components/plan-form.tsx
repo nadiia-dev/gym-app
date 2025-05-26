@@ -17,6 +17,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { uploadImages } from "@/utils";
+import { addPlan, editPlan } from "@/app/actions/plans";
+import toast from "react-hot-toast";
 
 interface Props {
   formMode: "add" | "edit";
@@ -37,6 +40,8 @@ const PlanForm = ({ formMode, initialValues }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedFiles, setSelectedFiles] = useState<any[]>([]);
+  const [urls, setUrls] = useState<string[]>(initialValues?.images || []);
+
   const form: any = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,8 +55,39 @@ const PlanForm = ({ formMode, initialValues }: Props) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: any) {
+    try {
+      setLoading(true);
+
+      let newMediaUrls = [];
+      for (let file of selectedFiles) {
+        const res = await uploadImages(file);
+        if (!res?.success) {
+          throw new Error(res?.message);
+        }
+        newMediaUrls.push(res.data);
+      }
+
+      values.images = newMediaUrls;
+
+      let response = null;
+      if (formMode === "add") {
+        response = await addPlan(values);
+      } else {
+        values.images = [...values.images, ...urls];
+        response = await editPlan(initialValues.id, values);
+      }
+      if (response?.success) {
+        toast.success(response.message);
+        router.push("/account/admin/plans");
+      } else {
+        toast.error(response?.message);
+      }
+    } catch (e) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const { fields, remove, append } = useFieldArray({
@@ -72,6 +108,12 @@ const PlanForm = ({ formMode, initialValues }: Props) => {
     setSelectedFiles(tmp);
   };
 
+  const onRemoveExistingUrls = (index: number) => {
+    const temp = [...urls];
+    temp.splice(index, 1);
+    setUrls(temp);
+  };
+
   return (
     <>
       <Form {...form}>
@@ -83,7 +125,7 @@ const PlanForm = ({ formMode, initialValues }: Props) => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your full name" {...field} />
+                  <Input placeholder="Enter plan name" {...field} />
                 </FormControl>
                 <FormDescription>Name</FormDescription>
                 <FormMessage />
@@ -183,6 +225,20 @@ const PlanForm = ({ formMode, initialValues }: Props) => {
               }}
             />
             <div className="flex flex-wrap gap-5">
+              {urls.map((url, index) => (
+                <div
+                  className="border p-2 rounded border-gray-300 flex items-center justify-center flex-col"
+                  key={index}
+                >
+                  <img src={url} className="w-20 h-20 object-contain" />
+                  <span
+                    className="text-gray-500 text-xs cursor-pointer underline text-center w-full"
+                    onClick={() => onRemoveExistingUrls(index)}
+                  >
+                    Remove
+                  </span>
+                </div>
+              ))}
               {selectedFiles.map((file, index) => (
                 <div
                   className="border p-2 rounded border-gray-300 flex items-center justify-center flex-col"
