@@ -20,7 +20,7 @@ export default function Home() {
     <div className="home-parent py-10 px-20">
       <div className="flex justify-between items-center">
         <h1 className="Shey.Fit text-2xl font-bold text-white uppercase">
-          <b>Shey.Fit</b>
+          <b>Gym.App</b>
         </h1>
         <Button variant={"outline"} onClick={() => setOpenSheet(true)}>
           Sign-in
@@ -29,8 +29,8 @@ export default function Home() {
 
       <div className="flex flex-col justify-center items-center h-[80vh] gap-7 mt-20">
         <h1 className="text-6xl font-bold text-center">
-          <b className="text-white">Shey.</b>
-          <b className="text-green-600">Fit</b>
+          <b className="text-white">Gym.</b>
+          <b className="text-green-600">App</b>
         </h1>
 
         <p className="text-sm font-semibold text-gray-500">

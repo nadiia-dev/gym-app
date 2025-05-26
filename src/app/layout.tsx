@@ -8,6 +8,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import CustomLayout from "@/custom-layout";
 
 export const metadata: Metadata = {
   title: "Gym app",
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <CustomLayout>{children}</CustomLayout>;
+        </body>
       </html>
     </ClerkProvider>
   );
