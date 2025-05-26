@@ -96,3 +96,30 @@ export const getAllUserSubscription = async (user_id: string) => {
     };
   }
 };
+
+export const getAllSubscriptions = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .select("* , plans(*), user_profiles(name)");
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    let formattedData = data.map((item: any) => ({
+      plan: item.plans,
+      ...item,
+    }));
+
+    return {
+      success: true,
+      data: formattedData,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
